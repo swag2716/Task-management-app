@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/utils/app_colors.dart';
 import 'package:my_app/widgets/textField_widget.dart';
+import 'package:my_app/helpers/button.dart';
+import 'package:get/get.dart';
 
 class AddTask extends StatelessWidget{
   const AddTask({Key? key}) : super(key: key);
@@ -34,16 +36,26 @@ class AddTask extends StatelessWidget{
                   height: 40,
                 ),
 
-                IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back, color: AppColors.smallTextColor,))
+                IconButton(onPressed: (){
+                  Get.back();
+                }, icon: Icon(Icons.arrow_back, color: AppColors.smallTextColor,))
               ]
             ),
             Column(
               children: [
-                TextFieldWidget(textController: nameController, hintText: "Task Name", borderRadius: 30),
+                TextFieldWidget(textController: nameController, hintText: "Task Name", borderRadius: 15),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFieldWidget(textController: detailController, hintText: "Task Deatils", borderRadius: 30, maxLines: 4,),
+                TextFieldWidget(textController: detailController, hintText: "Task Details", borderRadius: 30, maxLines: 4,),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  style: button(AppColors.mainColor, AppColors.textHolder),
+                  onPressed: () {},
+                  child: const Text('Add'),
+                )
                               
               ]
             ),

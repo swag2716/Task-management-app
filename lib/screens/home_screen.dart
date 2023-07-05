@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/add_task.dart';
+import 'package:my_app/screens/all_tasks.dart';
 import 'package:my_app/utils/app_colors.dart';
 import 'package:my_app/helpers/button.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -46,26 +49,29 @@ class _HomeScreenState extends State<HomeScreen> {
               Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                children: [ElevatedButton(
+                children: [
+                  ElevatedButton(
                   style: button(AppColors.mainColor, AppColors.textHolder),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(()=> const AddTask(), transition: Transition.zoom, duration: const Duration(milliseconds: 800) );
+                  },
                   child: const Text('Add task'),
                 ),
 
-                SizedBox(
-                  height: MediaQuery.of(context).size.height/25,
+                const SizedBox(
+                  height: 30,
                 ),
               
                 ElevatedButton(
                   style: button(AppColors.textHolder, AppColors.mainColor),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(()=> const AllTasks(), transition: Transition.fade, duration: const Duration(seconds: 1) );
+                  },
                   child: const Text('View all'),
                 )
                 ]
                 ),
               ),
-
-              // ButtonWidget(text: "Add Task", backgroundColor: AppColors.mainColor, textColor: AppColors.textHolder)
             ]),
       ),
     );
