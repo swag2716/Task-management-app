@@ -23,6 +23,7 @@ func AddTask() gin.HandlerFunc {
 		}
 
 		task.ID = primitive.NewObjectID()
+		task.Date = time.Now().AddDate(0, 0, 7)
 		result, insertErr := taskCollection.InsertOne(ctx, task)
 
 		if insertErr != nil {
