@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/controller/task_controller.dart';
 import 'package:my_app/utils/app_colors.dart';
 import 'package:my_app/widgets/task_widget.dart';
 import 'package:my_app/helpers/button.dart';
 import 'package:get/get.dart';
-class AllTasks extends StatelessWidget {
-  const AllTasks({Key? key}) : super(key: key);
+class AllTasks extends StatefulWidget {
+  final String? taskId;
+  const AllTasks({Key? key, this.taskId = null}) : super(key: key);
+
+  @override
+  State<AllTasks> createState() => _AllTasksState();
+}
+
+class _AllTasksState extends State<AllTasks> {
+  final TaskController _taskController = Get.find<TaskController>();
+
+  @override
+  void initState(){
+    super.initState();
+    _taskController.getTasks(widget.taskId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    List myTasks = [
-      "Try harder",
-      "Try Smarter",
-    ];
+    // List myTasks = [
+    //   "Try harder",
+    //   "Try Smarter",
+    // ];
+
 
     final leftEditIcon = Container(
       padding: const EdgeInsets.only(left: 20),
@@ -94,8 +110,9 @@ class AllTasks extends StatelessWidget {
           ),
           Flexible(
             child: ListView.builder(
-                itemCount: myTasks.length,
+                itemCount: _taskController.tasks.length,
                 itemBuilder: (context, index) {
+                  Task task = _taskController.tasks[index];
                   return Dismissible(
                     background: leftEditIcon,
                     secondaryBackground: rightDeleteIcon,
@@ -172,7 +189,7 @@ class AllTasks extends StatelessWidget {
                       margin: const EdgeInsets.only(
                           left: 20, right: 20, bottom: 10),
                       child: TaskWidget(
-                          text: myTasks[index], color: AppColors.textHolder),
+                          text: task.taskName, color: AppColors.textHolder),
                     ),
                   );
                 }),

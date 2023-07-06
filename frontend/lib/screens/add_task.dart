@@ -4,8 +4,11 @@ import 'package:my_app/widgets/textField_widget.dart';
 import 'package:my_app/helpers/button.dart';
 import 'package:get/get.dart';
 
+import '../controller/task_controller.dart';
+
 class AddTask extends StatelessWidget{
-  const AddTask({Key? key}) : super(key: key);
+  final TaskController _taskController = Get.find<TaskController>();
+  AddTask({Key? key}) : super(key: key);
 
 
   @override
@@ -53,7 +56,22 @@ class AddTask extends StatelessWidget{
                 ),
                 ElevatedButton(
                   style: button(AppColors.mainColor, AppColors.textHolder),
-                  onPressed: () {},
+                  onPressed: () async{
+                    Task newTask = Task(
+                      id: '',
+                      taskName: nameController.text, 
+                      taskDetail: detailController.text, 
+                      date: DateTime.now(),
+                      );
+
+                      try{
+                        await _taskController.addTask(newTask);
+                        Get.back();
+                      } catch(e){
+                        print("Failed to add task: $e");
+                        Get.snackbar("error", "Failed to add task");
+                      }
+                  },
                   child: const Text('Add'),
                 )
                               

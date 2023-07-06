@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ElevatedButton(
                   style: button(AppColors.mainColor, AppColors.textHolder),
                   onPressed: () {
-                    Get.to(()=> const AddTask(), transition: Transition.zoom, duration: const Duration(milliseconds: 800) );
+                    Get.to(()=> AddTask(), transition: Transition.zoom, duration: const Duration(milliseconds: 800) );
                   },
                   child: const Text('Add task'),
                 ),

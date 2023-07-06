@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/screens/home_screen.dart';
 import 'package:get/get.dart';
-
+import 'controller/task_controller.dart';
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final TaskController taskController = Get.put(TaskController());
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
