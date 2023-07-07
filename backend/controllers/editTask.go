@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"context"
+	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -28,20 +30,21 @@ func EditTask() gin.HandlerFunc {
 
 		var updateObj primitive.D
 
+		updateObj = append(updateObj, bson.E{Key: "task_id", Value: taskId})
 		updateObj = append(updateObj, bson.E{Key: "task_name", Value: task.Task_name})
 		updateObj = append(updateObj, bson.E{Key: "task_detail", Value: task.Task_detail})
 
 		// task.Date = time.Now().UTC().Format("2006-01-02")
 		// updateObj = append(updateObj, bson.E{Key: "date", Value: task.Date})
 
-		upsert := true
+		upsert := false
 		filter := bson.M{"task_id": taskId}
 
 		opt := options.UpdateOptions{
 			Upsert: &upsert,
 		}
 
-		result, err := taskCollection.UpdateOne(
+		_, err := taskCollection.UpdateOne(
 			ctx,
 			filter,
 			bson.D{
@@ -49,13 +52,18 @@ func EditTask() gin.HandlerFunc {
 			},
 			&opt,
 		)
-
+		fmt.Println(task)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+		fmt.Println(taskId)
+		task.ID, err = primitive.ObjectIDFromHex(taskId)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-		c.JSON(http.StatusOK, result)
+		c.JSON(http.StatusOK, task)
 	}
 
 }

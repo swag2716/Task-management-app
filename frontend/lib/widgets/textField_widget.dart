@@ -3,13 +3,13 @@ import 'package:my_app/utils/app_colors.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final TextEditingController textController;
-  final String hintText;
+  final String? hintText;
   final double borderRadius;
   final int? maxLines;
   const TextFieldWidget(
       {Key? key,
       required this.textController,
-      required this.hintText,
+      this.hintText = "",
       required this.borderRadius,
       this.maxLines = 1})
       : super(key: key);

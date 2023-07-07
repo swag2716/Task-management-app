@@ -32,7 +32,7 @@ class Task{
 }
 
 class TaskController extends GetxController{
-  final tasks = <Task>[].obs;
+  RxList<Task> tasks = <Task>[].obs;
 
   Future <void> getTasks(String? taskId) async{
     try{
@@ -56,19 +56,21 @@ class TaskController extends GetxController{
 
   Future<void> editTask(Task task) async {
     try {
-      final response = await http.put(
-        Uri.parse('http://localhost:8000/task/${task.id}'),
+      final response = await http.patch(
+        Uri.parse('http://192.168.29.116:8000/task/${task.id}'),
         body: jsonEncode(task.toJSON()),
         headers: {'Content-Type': 'application/json'},
       );
 
-      if(response.statusCode != 200){
+      if(response.statusCode == 200){
+        print(response.body);
         final index = tasks.indexWhere((t) => t.id == task.id);
         if(index != -1){
           tasks[index] = task;
-        }
+        } 
+      }else{
         throw Exception('Failed to edit task');
-      }
+        }
     } catch(e) {
       throw Exception('Failed to edit task: $e');
     }
@@ -76,7 +78,7 @@ class TaskController extends GetxController{
 
   Future<void> deleteTask(String taskId) async {
     try{
-      final response = await http.delete(Uri.parse('http://localhost:8000/task/$taskId'));
+      final response = await http.delete(Uri.parse('http://192.168.29.116:8000/task/$taskId'));
       if(response.statusCode == 200){
         tasks.removeWhere((t) => t.id == taskId);
         

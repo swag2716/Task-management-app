@@ -15,7 +15,7 @@ func GetTasks() gin.HandlerFunc {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 		defer cancel()
 
-		result, err := taskCollection.Find(context.TODO(), bson.D{})
+		result, err := taskCollection.Find(ctx, bson.D{})
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
