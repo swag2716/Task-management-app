@@ -31,8 +31,8 @@ func EditTask() gin.HandlerFunc {
 		updateObj = append(updateObj, bson.E{Key: "task_name", Value: task.Task_name})
 		updateObj = append(updateObj, bson.E{Key: "task_detail", Value: task.Task_detail})
 
-		task.Date = time.Now().AddDate(0, 0, 7)
-		updateObj = append(updateObj, bson.E{Key: "date", Value: task.Date})
+		// task.Date = time.Now().UTC().Format("2006-01-02")
+		// updateObj = append(updateObj, bson.E{Key: "date", Value: task.Date})
 
 		upsert := true
 		filter := bson.M{"task_id": taskId}

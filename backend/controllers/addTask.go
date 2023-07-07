@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -18,19 +19,20 @@ func AddTask() gin.HandlerFunc {
 		var task models.Task
 
 		if err := c.BindJSON(&task); err != nil {
+			fmt.Println(err.Error())
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
 		task.ID = primitive.NewObjectID()
-		task.Date = time.Now().AddDate(0, 0, 7)
-		result, insertErr := taskCollection.InsertOne(ctx, task)
+		// task.Date = time.Now()
+		_, insertErr := taskCollection.InsertOne(ctx, task)
 
 		if insertErr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": insertErr.Error()})
 		}
 
-		c.JSON(http.StatusOK, result)
+		c.JSON(http.StatusOK, task)
 
 	}
 }

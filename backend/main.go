@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/swapnika/task_management/database"
+	"github.com/swapnika/task_management/routes"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -19,6 +20,8 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
+
+	routes.TaskRouter(router)
 
 	router.Run(":" + port)
 }

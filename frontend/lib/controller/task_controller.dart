@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -7,34 +6,26 @@ class Task{
   final String id;
   final String taskName;
   final String taskDetail;
-  final DateTime date;
+  // final DateTime date;
 
-  Task({required this.id, required this.taskName, required this.taskDetail, required this.date});
+  Task({required this.id, required this.taskName, required this.taskDetail});
 
-  Task withId(String newId) {
-    return Task(
-      id: newId,
-      taskName: taskName,
-      taskDetail: taskDetail,
-      date: date,
-    );
-  }
 
   factory Task.fromJSON(Map<String, dynamic> json){
     return Task(
-      id: json['_id'], 
-      taskName: json['task_name'], 
-      taskDetail: json['task_detail'], 
-      date: DateFormat('dd-MM-yyyy').parse(json['date']),
+      id:json['_id'], 
+      taskName:json['task_name'], 
+      taskDetail:json['task_detail'], 
+      // date:DateTime.parse(json['date']),
       );
   }
 
   Map<String, dynamic> toJSON() {
     return {
-      '_id':id,
+      '_id': id,
       'task_name':taskName,
       'task_detail':taskDetail,
-      'date':DateFormat('dd-MM-yyyy').format(date),
+      // 'date':date.toIso8601String(),
     };
   }
 
@@ -45,14 +36,16 @@ class TaskController extends GetxController{
 
   Future <void> getTasks(String? taskId) async{
     try{
-      String url = 'http://localhost:8000/task';
+      String url = 'http://192.168.29.116:8000/task';
       if(taskId != null) {
         url+= taskId;
       }
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
+        // print(response.body);
         final jsonData = jsonDecode(response.body) as List<dynamic>;
-        tasks.value = jsonData.map((data) => Task.fromJSON(data)).toList();
+        tasks.assignAll(jsonData.map((data) => Task.fromJSON(data)).toList());
+        print(tasks);
       } else{
         throw Exception('Failed to fetch tasks');
       }
@@ -98,7 +91,7 @@ class TaskController extends GetxController{
   Future<void> addTask(Task task) async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:8000/task'),
+        Uri.parse('http://192.168.29.116:8000/task'),
         body: jsonEncode(task.toJSON()),
         headers: {'Content-Type': 'application/json'},
       );

@@ -58,17 +58,16 @@ class AddTask extends StatelessWidget{
                   style: button(AppColors.mainColor, AppColors.textHolder),
                   onPressed: () async{
                     Task newTask = Task(
-                      id: '',
+                      id: "",
                       taskName: nameController.text, 
                       taskDetail: detailController.text, 
-                      date: DateTime.now(),
+                      // date: ,
                       );
 
                       try{
                         await _taskController.addTask(newTask);
                         Get.back();
                       } catch(e){
-                        print("Failed to add task: $e");
                         Get.snackbar("error", "Failed to add task");
                       }
                   },
