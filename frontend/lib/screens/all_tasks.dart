@@ -125,7 +125,6 @@ class _AllTasksState extends State<AllTasks> {
                             backgroundColor: Colors.blue.withOpacity(0.1),
                             barrierColor: Colors.grey.withOpacity(0.2),
                             context: context, builder: (_){
-                              if(direction == DismissDirection.startToEnd){}
                               return Container(
                                 padding: const EdgeInsets.only(top: 100),
                                 width: double.maxFinite,
@@ -160,7 +159,6 @@ class _AllTasksState extends State<AllTasks> {
                             backgroundColor: Colors.blue.withOpacity(0.1),
                             barrierColor: Colors.grey.withOpacity(0.2),
                             context: context, builder: (_){
-                              if(direction == DismissDirection.startToEnd){}
                               return Container(
                                 padding: const EdgeInsets.only(top: 100),
                                 width: double.maxFinite,
@@ -169,7 +167,14 @@ class _AllTasksState extends State<AllTasks> {
                                   children: [
                                     ElevatedButton(
                                       style: button(Colors.red, Colors.white),
-                                      onPressed: () {},
+                                      onPressed: () async{
+                                        try{
+                                          await _taskController.deleteTask(task.id);
+                                          Get.back();
+                                        } catch(e){
+                                          Get.snackbar("error", "Failed to delete task");
+                                        }
+                                      },
                                       child: const Text('Delete'),
                                     ),
                                     const SizedBox(
@@ -177,7 +182,9 @@ class _AllTasksState extends State<AllTasks> {
                                     ),
                                     ElevatedButton(
                                       style: button(Colors.green, Colors.white),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.back();
+                                      },
                                       child: const Text('Cancel'),
                                     )
                                   ],
@@ -185,7 +192,7 @@ class _AllTasksState extends State<AllTasks> {
                               );
                             }
                           );
-                          return Future.delayed(const Duration(seconds: 1), ()=> direction == DismissDirection.endToStart);
+                          return false;
                         }
                       },
                       key: ObjectKey(index),

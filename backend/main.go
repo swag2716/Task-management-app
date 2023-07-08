@@ -4,12 +4,10 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/swapnika/task_management/database"
 	"github.com/swapnika/task_management/routes"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var taskCollection *mongo.Collection = database.OpenCollection(database.Client, "task")
+// var taskCollection *mongo.Collection = database.OpenCollection(database.Client, "task")
 
 func main() {
 	port := os.Getenv("PORT")

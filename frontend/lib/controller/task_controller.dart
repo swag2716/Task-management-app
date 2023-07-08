@@ -6,25 +6,28 @@ class Task{
   final String id;
   final String taskName;
   final String taskDetail;
+  final String taskId;
   // final DateTime date;
 
-  Task({required this.id, required this.taskName, required this.taskDetail});
+  Task({required this.id, required this.taskName, required this.taskDetail, required this.taskId});
 
 
   factory Task.fromJSON(Map<String, dynamic> json){
     return Task(
-      id:json['_id'], 
+      id:json['ID'], 
       taskName:json['task_name'], 
       taskDetail:json['task_detail'], 
+      taskId:json['task_id'],
       // date:DateTime.parse(json['date']),
       );
   }
 
   Map<String, dynamic> toJSON() {
     return {
-      '_id': id,
+      'ID': id,
       'task_name':taskName,
       'task_detail':taskDetail,
+      'task_id':taskId,
       // 'date':date.toIso8601String(),
     };
   }
@@ -42,14 +45,21 @@ class TaskController extends GetxController{
       }
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        // print(response.body);
-        final jsonData = jsonDecode(response.body) as List<dynamic>;
-        tasks.assignAll(jsonData.map((data) => Task.fromJSON(data)).toList());
+        print(response.body);
+        final jsonData = jsonDecode(response.body) as List<dynamic>?;
+        print(jsonData);
+        if(jsonData == null){
+          print("No tasks");
+        } else{
+          tasks.assignAll(jsonData.map((data) => Task.fromJSON(data)).toList());
+        }
         print(tasks);
       } else{
+        print("problem");
         throw Exception('Failed to fetch tasks');
       }
     } catch(e) {
+      print("pronlem $e");
       throw Exception('Failed to fetch task : $e');
     }
   }

@@ -2,8 +2,6 @@ package controllers
 
 import (
 	"context"
-	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -30,7 +28,9 @@ func EditTask() gin.HandlerFunc {
 
 		var updateObj primitive.D
 
-		updateObj = append(updateObj, bson.E{Key: "task_id", Value: taskId})
+		task.ID, _ = primitive.ObjectIDFromHex(taskId)
+		task.Task_id = taskId
+
 		updateObj = append(updateObj, bson.E{Key: "task_name", Value: task.Task_name})
 		updateObj = append(updateObj, bson.E{Key: "task_detail", Value: task.Task_detail})
 
@@ -52,15 +52,9 @@ func EditTask() gin.HandlerFunc {
 			},
 			&opt,
 		)
-		fmt.Println(task)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
-		}
-		fmt.Println(taskId)
-		task.ID, err = primitive.ObjectIDFromHex(taskId)
-		if err != nil {
-			log.Fatal(err)
 		}
 
 		c.JSON(http.StatusOK, task)

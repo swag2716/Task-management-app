@@ -61,7 +61,8 @@ class EditTaskScreen extends StatelessWidget{
                       Task updatedTask = Task(
                         id: task.id,
                         taskName: nameController.text,
-                        taskDetail: detailController.text
+                        taskDetail: detailController.text,
+                        taskId: task.taskId,
                       );
 
                       try{
