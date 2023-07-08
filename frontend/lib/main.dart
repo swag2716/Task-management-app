@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/screens/home_screen.dart';
 import 'package:get/get.dart';
 import 'controller/task_controller.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -24,4 +25,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

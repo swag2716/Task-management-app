@@ -15,12 +15,6 @@ func DeleteTask() gin.HandlerFunc {
 		defer cancel()
 
 		taskId := c.Param("task_id")
-		// objId, err := primitive.ObjectIDFromHex(taskId)
-
-		// if err != nil {
-		// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		// 	return
-		// }
 
 		_, err := taskCollection.DeleteOne(ctx, bson.M{"task_id": taskId})
 		if err != nil {

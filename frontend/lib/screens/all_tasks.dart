@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/controller/task_controller.dart';
-import 'package:my_app/screens/view_task_screen.dart';
+import 'package:my_app/screens/add_task.dart';
+import 'package:my_app/screens/home_screen.dart';
 import 'package:my_app/utils/app_colors.dart';
-import 'package:my_app/widgets/task_widget.dart';
-import 'package:my_app/helpers/button.dart';
 import 'package:get/get.dart';
+import '../widgets/task_list_widget.dart';
 
-import 'edit_task_screen.dart';
+
 class AllTasks extends StatefulWidget {
   final String? taskId;
   const AllTasks({Key? key, this.taskId}) : super(key: key);
@@ -19,15 +19,13 @@ class _AllTasksState extends State<AllTasks> {
   final TaskController _taskController = Get.find<TaskController>();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _taskController.getTasks(widget.taskId);
   }
 
   @override
   Widget build(BuildContext context) {
-
-
     final leftEditIcon = Container(
       padding: const EdgeInsets.only(left: 20),
       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
@@ -57,14 +55,11 @@ class _AllTasksState extends State<AllTasks> {
           Container(
             padding: const EdgeInsets.only(left: 10, top: 40),
             alignment: Alignment.topLeft,
-            
             width: double.maxFinite,
             height: MediaQuery.of(context).size.height / 3,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage("assets/header.jpg")
-                )
-            ),
+                    fit: BoxFit.cover, image: AssetImage("assets/header.jpg"))),
             child: InkWell(
                 onTap: () {
                   Get.back();
@@ -77,9 +72,16 @@ class _AllTasksState extends State<AllTasks> {
           Container(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Row(children: [
-              Icon(Icons.home, color: AppColors.secondaryColor),
-              const SizedBox(
-                width: 10,
+              InkWell(
+                  onTap: () {
+                    Get.to(() => const HomeScreen(),
+                        transition: Transition.fade,
+                        duration: const Duration(milliseconds: 800));
+                  },
+                  child: Icon(Icons.home,
+                      size: 35, color: AppColors.secondaryColor)),
+              Expanded(
+                child: Container(),
               ),
               Container(
                 width: 25,
@@ -88,126 +90,28 @@ class _AllTasksState extends State<AllTasks> {
                   borderRadius: BorderRadius.circular(12.5),
                   color: Colors.black,
                 ),
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 20,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => AddTask(),
+                        transition: Transition.zoom,
+                        duration: const Duration(milliseconds: 800));
+                  },
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
               ),
-              Expanded(
-                child: Container(),
-              ),
-              Icon(Icons.calendar_month_sharp, color: AppColors.secondaryColor),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                "2",
-                style: TextStyle(fontSize: 20, color: AppColors.secondaryColor),
-              )
             ]),
           ),
-          Flexible(
-            child: Obx(
-              () => ListView.builder(
-                  itemCount: _taskController.tasks.length,
-                  itemBuilder: (context, index) {
-                    Task task = _taskController.tasks[index];
-                    return Dismissible(
-                      background: leftEditIcon,
-                      secondaryBackground: rightDeleteIcon,
-                      onDismissed: (DismissDirection direction) {
-                        print("After dismiss");
-                      },
-                      confirmDismiss: (DismissDirection direction) async {
-                        if(direction==DismissDirection.startToEnd){
-                          showModalBottomSheet(
-                            backgroundColor: Colors.blue.withOpacity(0.1),
-                            barrierColor: Colors.grey.withOpacity(0.2),
-                            context: context, builder: (_){
-                              return Container(
-                                padding: const EdgeInsets.only(top: 100),
-                                width: double.maxFinite,
-                                height: 400,
-                                child: Column(
-                                  children: [
-                                    ElevatedButton(
-                                      style: button(AppColors.mainColor, AppColors.textHolder),
-                                      onPressed: () {
-                                        Get.to(()=> ViewTaskScreen(name: task.taskName, detail: task.taskDetail), transition: Transition.zoom, duration: const Duration(milliseconds: 800) );
-                                      },
-                                      child: const Text('View'),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    ElevatedButton(
-                                      style: button(AppColors.mainColor, AppColors.secondaryColor),
-                                      onPressed: () {
-                                        Get.to(()=> EditTaskScreen(task: task,), transition: Transition.zoom, duration: const Duration(milliseconds: 800) );
-                                      },
-                                      child: const Text('Edit'),
-                                    )
-                                  ],
-                                ),
-                              );
-                            }
-                          );
-                          return false;
-                        }else{
-                          showModalBottomSheet(
-                            backgroundColor: Colors.blue.withOpacity(0.1),
-                            barrierColor: Colors.grey.withOpacity(0.2),
-                            context: context, builder: (_){
-                              return Container(
-                                padding: const EdgeInsets.only(top: 100),
-                                width: double.maxFinite,
-                                height: 400,
-                                child: Column(
-                                  children: [
-                                    ElevatedButton(
-                                      style: button(Colors.red, Colors.white),
-                                      onPressed: () async{
-                                        try{
-                                          await _taskController.deleteTask(task.id);
-                                          Get.back();
-                                        } catch(e){
-                                          Get.snackbar("error", "Failed to delete task");
-                                        }
-                                      },
-                                      child: const Text('Delete'),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                    ElevatedButton(
-                                      style: button(Colors.green, Colors.white),
-                                      onPressed: () {
-                                        Get.back();
-                                      },
-                                      child: const Text('Cancel'),
-                                    )
-                                  ],
-                                ),
-                              );
-                            }
-                          );
-                          return false;
-                        }
-                      },
-                      key: ObjectKey(index),
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 10),
-                        child: TaskWidget(
-                            text: task.taskName, color: AppColors.textHolder),
-                      ),
-                    );
-                  }),
-            ),
-          )
+          TaskList(
+              taskController: _taskController,
+              leftEditIcon: leftEditIcon,
+              rightDeleteIcon: rightDeleteIcon)
         ],
       ),
     );
   }
 }
+

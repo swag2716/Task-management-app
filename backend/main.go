@@ -7,8 +7,6 @@ import (
 	"github.com/swapnika/task_management/routes"
 )
 
-// var taskCollection *mongo.Collection = database.OpenCollection(database.Client, "task")
-
 func main() {
 	port := os.Getenv("PORT")
 

@@ -42,35 +42,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     )
                   ])),
-
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height/2.2,
-                  ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 2.2,
+              ),
               Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                  style: button(AppColors.mainColor, AppColors.textHolder),
-                  onPressed: () {
-                    Get.to(()=> AddTask(), transition: Transition.zoom, duration: const Duration(milliseconds: 800) );
-                  },
-                  child: const Text('Add task'),
-                ),
-
-                const SizedBox(
-                  height: 30,
-                ),
-              
-                ElevatedButton(
-                  style: button(AppColors.textHolder, AppColors.mainColor),
-                  onPressed: () {
-                    Get.to(()=> const AllTasks(), transition: Transition.fade, duration: const Duration(seconds: 1) );
-                  },
-                  child: const Text('View all'),
-                )
-                ]
-                ),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        style:
+                            button(AppColors.mainColor, AppColors.textHolder),
+                        onPressed: () {
+                          Get.to(() => AddTask(),
+                              transition: Transition.zoom,
+                              duration: const Duration(milliseconds: 800));
+                        },
+                        child: const Text('Add task'),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      ElevatedButton(
+                        style:
+                            button(AppColors.textHolder, AppColors.mainColor),
+                        onPressed: () {
+                          Get.to(() => const AllTasks(),
+                              transition: Transition.fade,
+                              duration: const Duration(seconds: 1));
+                        },
+                        child: const Text('View all'),
+                      )
+                    ]),
               ),
             ]),
       ),
