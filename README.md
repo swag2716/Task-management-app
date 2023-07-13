@@ -53,16 +53,6 @@ gin/gonic framework for backend.
 **Server:** Golang, Gin/Gonic, MongoDB
 
 
-## Screenshots
-
-![Home Screen](frontend/screenshots/Home_page.jpeg)
-![All tasks](frontend/screenshots/All_tasks.jpeg)
-![Edit](frontend/screenshots/To_Do_Edit.jpeg)
-![View or Edit](frontend/screenshots/View_or_Edit.jpeg)
-<img src="frontend/screenshots/View_or_Edit.jpeg" alt="View or Edit" width="400", height="600">
-
-
-
 ## Demo
 
 https://drive.google.com/file/d/1BTGIK8yp-vXqYNTyicYK-XU5QJ07Yfs6/view?usp=sharing
