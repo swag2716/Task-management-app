@@ -33,6 +33,7 @@ func AddTask() gin.HandlerFunc {
 
 		if insertErr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": insertErr.Error()})
+			return
 		}
 
 		c.JSON(http.StatusOK, task)

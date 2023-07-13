@@ -8,8 +8,10 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final TaskController taskController = Get.put(TaskController());
+
   MyApp({super.key});
+
+  final TaskController taskController = Get.put(TaskController());
 
   // This widget is the root of your application.
   @override

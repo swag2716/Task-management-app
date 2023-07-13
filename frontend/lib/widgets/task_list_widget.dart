@@ -43,8 +43,8 @@ class TaskList extends StatelessWidget {
                   confirmDismiss: (DismissDirection direction) async {
                     if (direction == DismissDirection.startToEnd) {
                       showModalBottomSheet(
-                          backgroundColor: Colors.blue.withOpacity(0.1),
-                          barrierColor: Colors.grey.withOpacity(0.8),
+                          backgroundColor: Colors.grey.withOpacity(0.1),
+                          barrierColor: Colors.blue.withOpacity(0.2),
                           context: context,
                           builder: (_) {
                             return Container(
