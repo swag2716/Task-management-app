@@ -57,8 +57,10 @@ gin/gonic framework for backend.
 
 ![Home Screen](frontend/screenshots/Home_page.jpeg)
 ![All tasks](frontend/screenshots/All_tasks.jpeg)
-![Edit](frontend/screenshots/To_do_Edit.jpeg)
+![Edit](frontend/screenshots/To_Do_Edit.jpeg)
 ![View or Edit](frontend/screenshots/View_or_Edit.jpeg)
+<img src="frontend/screenshots/View_or_Edit.jpeg" alt="View or Edit" width="400", height="600">
+
 
 
 ## Demo
